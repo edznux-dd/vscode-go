@@ -339,6 +339,21 @@
         "description": "Generates unit tests for the selected function in the current file"
       },
       {
+        "command": "go.fuzz.generate.package",
+        "title": "Go: Generate Fuzz Tests For Package",
+        "description": "Generates fuzz tests for the current package"
+      },
+      {
+        "command": "go.fuzz.generate.file",
+        "title": "Go: Generate Fuzz Tests For File",
+        "description": "Generates fuzz tests for the current file"
+      },
+      {
+        "command": "go.fuzz.generate.function",
+        "title": "Go: Generate Fuzz Tests For Function",
+        "description": "Generates fuzz tests for the selected function in the current file"
+      },
+      {
         "command": "go.impl.cursor",
         "title": "Go: Generate Interface Stubs",
         "description": "Generates method stub for implementing the provided interface and inserts at the cursor."
@@ -1720,6 +1735,21 @@
               "default": true,
               "description": "If true, adds command to generate unit tests for current package to the editor context menu"
             },
+            "generateFuzzTestForFunction": {
+              "type": "boolean",
+              "default": true,
+              "description": "If true, adds command to generate fuzz tests for function under the cursor to the editor context menu"
+            },
+            "generateFuzzTestForFile": {
+              "type": "boolean",
+              "default": true,
+              "description": "If true, adds command to generate fuzz tests for current file to the editor context menu"
+            },
+            "generateFuzzTestForPackage": {
+              "type": "boolean",
+              "default": true,
+              "description": "If true, adds command to generate fuzz tests for current package to the editor context menu"
+            },
             "addImport": {
               "type": "boolean",
               "default": true,
@@ -1758,6 +1788,9 @@
             "generateTestForFunction": true,
             "generateTestForFile": false,
             "generateTestForPackage": false,
+            "generateFuzzTestForFunction": true,
+            "generateFuzzTestForFile": false,
+            "generateFuzzTestForPackage": false,
             "addImport": true,
             "testCoverage": true,
             "playground": true,
@@ -2679,6 +2712,21 @@
         {
           "when": "editorTextFocus && config.go.editorContextMenuCommands.generateTestForPackage && resourceLangId == go",
           "command": "go.test.generate.package",
+          "group": "Go group 1"
+        },
+        {
+          "when": "editorTextFocus && config.go.editorContextMenuCommands.generateFuzzTestForFunction && resourceLangId == go",
+          "command": "go.fuzz.generate.function",
+          "group": "Go group 1"
+        },
+        {
+          "when": "editorTextFocus && config.go.editorContextMenuCommands.generateFuzzTestForFile && resourceLangId == go",
+          "command": "go.fuzz.generate.file",
+          "group": "Go group 1"
+        },
+        {
+          "when": "editorTextFocus && config.go.editorContextMenuCommands.generateFuzzTestForPackage && resourceLangId == go",
+          "command": "go.fuzz.generate.package",
           "group": "Go group 1"
         },
         {

@@ -156,6 +156,10 @@ interface Config {
 	 * Whether or not the file to generate test functions for is a test file.
 	 */
 	isTestFile?: boolean;
+	/**
+	 * Whether or not the test is a fuzz test
+	 */
+	isFuzzTest?: boolean;
 }
 
 function generateTests(
@@ -191,6 +195,10 @@ function generateTests(
 			args = args.concat(['-only', `^${conf.func}$`, conf.dir]);
 		} else {
 			args = args.concat(['-all', conf.dir]);
+		}
+
+		if (conf.isTestFile) {
+			args = args.concat(['-template', 'fuzz']);
 		}
 
 		cp.execFile(cmd, args, { env: toolExecutionEnvironment() }, (err, stdout, stderr) => {
@@ -250,3 +258,56 @@ async function getFunctions(goCtx: GoExtensionContext, doc: vscode.TextDocument)
 		[vscode.SymbolKind.Function, vscode.SymbolKind.Method].includes(sym.kind)
 	);
 }
+
+export const generateFuzzTestCurrentPackage: CommandFactory = (ctx, goCtx) => () => {
+	const editor = checkActiveEditor();
+	if (!editor) {
+		return false;
+	}
+
+	return generateTests(
+		ctx,
+		goCtx,
+		{
+			dir: editor.document.uri.fsPath,
+			isTestFile: editor.document.fileName.endsWith('_test.go'),
+			isFuzzTest: true
+		},
+		getGoConfig(editor.document.uri)
+	);
+};
+export const generateFuzzTestCurrentFile: CommandFactory = (ctx, goCtx) => () => {
+	const editor = checkActiveEditor();
+	if (!editor) {
+		return false;
+	}
+
+	return generateTests(
+		ctx,
+		goCtx,
+		{
+			dir: editor.document.uri.fsPath,
+			isTestFile: editor.document.fileName.endsWith('_test.go'),
+			isFuzzTest: true
+		},
+		getGoConfig(editor.document.uri)
+	);
+};
+
+export const generateFuzzTestCurrentFunction: CommandFactory = (ctx, goCtx) => () => {
+	const editor = checkActiveEditor();
+	if (!editor) {
+		return false;
+	}
+
+	return generateTests(
+		ctx,
+		goCtx,
+		{
+			dir: editor.document.uri.fsPath,
+			isTestFile: editor.document.fileName.endsWith('_test.go'),
+			isFuzzTest: true
+		},
+		getGoConfig(editor.document.uri)
+	);
+};
