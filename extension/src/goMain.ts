@@ -180,6 +180,9 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<ExtensionA
 	registerCommand('go.test.generate.package', goGenerateTests.generateTestCurrentPackage);
 	registerCommand('go.test.generate.file', goGenerateTests.generateTestCurrentFile);
 	registerCommand('go.test.generate.function', goGenerateTests.generateTestCurrentFunction);
+	registerCommand('go.fuzz.generate.package', goGenerateTests.generateFuzzTestCurrentPackage);
+	registerCommand('go.fuzz.generate.file', goGenerateTests.generateFuzzTestCurrentFile);
+	registerCommand('go.fuzz.generate.function', goGenerateTests.generateFuzzTestCurrentFunction);
 	registerCommand('go.toggle.test.file', goGenerateTests.toggleTestFile);
 	registerCommand('go.debug.startSession', commands.startDebugSession);
 	registerCommand('go.show.commands', commands.showCommands);
